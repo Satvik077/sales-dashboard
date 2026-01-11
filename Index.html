@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Analytics Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-900 text-white">
+    <header class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+                Sales Dashboard
+            </h1>
+            <p class="text-sm text-gray-400">Real-time analytics</p>
+        </div>
+    </header>
+
+    <section class="container mx-auto px-4 py-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-gray-800 rounded-xl p-4 shadow-lg">
+                <div class="text-2xl mb-2">💰</div>
+                <h3 class="text-gray-400 text-xs mb-1">Revenue</h3>
+                <p class="text-2xl font-bold">$45,231</p>
+                <span class="text-green-500 text-xs">+20.1%</span>
+            </div>
+
+            <div class="bg-gray-800 rounded-xl p-4 shadow-lg">
+                <div class="text-2xl mb-2">🛒</div>
+                <h3 class="text-gray-400 text-xs mb-1">Orders</h3>
+                <p class="text-2xl font-bold">1,568</p>
+                <span class="text-green-500 text-xs">+12.5%</span>
+            </div>
+
+            <div class="bg-gray-800 rounded-xl p-4 shadow-lg">
+                <div class="text-2xl mb-2">👥</div>
+                <h3 class="text-gray-400 text-xs mb-1">Customers</h3>
+                <p class="text-2xl font-bold">892</p>
+                <span class="text-green-500 text-xs">+8.2%</span>
+            </div>
+
+            <div class="bg-gray-800 rounded-xl p-4 shadow-lg">
+                <div class="text-2xl mb-2">📦</div>
+                <h3 class="text-gray-400 text-xs mb-1">Products</h3>
+                <p class="text-2xl font-bold">234</p>
+                <span class="text-red-500 text-xs">-2.4%</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mx-auto px-4 py-6">
+        <div class="bg-gray-800 rounded-xl p-6 shadow-lg mb-6">
+            <h2 class="text-xl font-bold mb-4">Revenue Trend</h2>
+            <canvas id="lineChart"></canvas>
+        </div>
+
+        <div class="bg-gray-800 rounded-xl p-6 shadow-lg mb-6">
+            <h2 class="text-xl font-bold mb-4">Monthly Sales</h2>
+            <canvas id="barChart"></canvas>
+        </div>
+
+        <div class="bg-gray-800 rounded-xl p-6 shadow-lg">
+            <h2 class="text-xl font-bold mb-4">Recent Orders</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-700">
+                            <th class="text-left py-2">Order</th>
+                            <th class="text-left py-2">Customer</th>
+                            <th class="text-left py-2">Amount</th>
+                            <th class="text-left py-2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-700">
+                            <td class="py-2">#12345</td>
+                            <td class="py-2">John Doe</td>
+                            <td class="py-2">$1,299</td>
+                            <td class="py-2">
+                                <span class="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">Delivered</span>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-700">
+                            <td class="py-2">#12346</td>
+                            <td class="py-2">Jane Smith</td>
+                            <td class="py-2">$199</td>
+                            <td class="py-2">
+                                <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-xs">Pending</span>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-700">
+                            <td class="py-2">#12347</td>
+                            <td class="py-2">Mike Johnson</td>
+                            <td class="py-2">$89</td>
+                            <td class="py-2">
+                                <span class="px-2 py-1 bg-blue-500/20 text-blue-400 rounded-full text-xs">Shipped</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 border-t border-gray-700 mt-8 py-6 text-center text-gray-400">
+        <p>Built by Satvik Chaurasia</p>
+    </footer>
+
+    <script>
+        const lineCtx = document.getElementById('lineChart').getContext('2d');
+        new Chart(lineCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                datasets: [{
+                    label: 'Revenue',
+                    data: [2400, 1398, 9800, 3908, 4800, 3800, 4300],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { labels: { color: '#fff' } } },
+                scales: {
+                    y: { ticks: { color: '#9ca3af' }, grid: { color: '#374151' } },
+                    x: { ticks: { color: '#9ca3af' }, grid: { color: '#374151' } }
+                }
+            }
+        });
+
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                datasets: [{
+                    label: 'Sales',
+                    data: [4000, 3000, 2000, 2780, 1890, 2390, 3490],
+                    backgroundColor: '#3b82f6',
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { labels: { color: '#fff' } } },
+                scales: {
+                    y: { ticks: { color: '#9ca3af' }, grid: { color: '#374151' } },
+                    x: { ticks: { color: '#9ca3af' }, grid: { color: '#374151' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+## 📱 How to Upload to GitHub (Mobile):
+
+1. **Go to:** github.com (sign in)
+2. **Create repo:** Tap "+" → "New repository" → Name: `sales-dashboard`
+3. **Add file:** Tap "Add file" → "Create new file"
+4. **Name it:** `index.html`
+5.
